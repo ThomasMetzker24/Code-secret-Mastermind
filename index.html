@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#153e35">
+  <meta name="description" content="Un code, six couleurs, dix essais. Un jeu de déduction inspiré du Mastermind.">
+  <title>Code secret · Le jeu des couleurs</title>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./game.js" defer></script>
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <header class="site-header"><a class="brand" href="./" aria-label="Code secret, accueil"><span class="brand-mark" aria-hidden="true">●<br>● ●</span> CODE SECRET<span class="brand-dot">®</span></a><span class="edition">JEU DE DÉDUCTION <span> / </span> Nº 001</span><a class="rules-link" href="#regles">Comment jouer <span aria-hidden="true">↗</span></a></header>
+  <main>
+    <section class="intro" aria-labelledby="title"><div><p class="eyebrow"><span></span> À VOUS DE DÉCODER</p><h1 id="title">La bonne couleur.<br>À la <em>bonne place.</em></h1><p class="intro-text">Quatre couleurs se cachent derrière le code.<br>Observez les indices. Faites parler votre logique.</p></div><div class="intro-seal" aria-hidden="true"><span>6 COULEURS</span><b>4</b><span>PLACES · 10 ESSAIS</span></div></section>
+    <div class="game-layout">
+      <section class="board" aria-labelledby="board-title"><div class="board-header"><div><p class="eyebrow">LE PLATEAU</p><h2 id="board-title">À vous de jouer.</h2></div><span id="status-badge" class="status-badge">En cours</span></div>
+        <div class="secret-bar"><span>LE CODE À TROUVER</span><div class="hidden-code" aria-label="Le code de quatre couleurs reste caché"><span>?</span><span>?</span><span>?</span><span>?</span></div><span class="secret-note">À vous de le déduire.</span></div>
+        <div class="column-headings"><span>ESSAI</span><span>VOTRE PROPOSITION</span><span>INDICES</span></div>
+        <ol id="history" class="history" aria-label="Historique des essais"></ol>
+        <div class="board-footer"><span><i class="legend-dot dark"></i> Bien placée</span><span><i class="legend-dot light"></i> Mal placée</span><span class="board-footer-note">Les indices ne donnent pas les positions.</span></div>
+      </section>
+      <aside class="controls" aria-label="Composer une proposition">
+        <section class="composer"><div class="composer-top"><p class="eyebrow">VOTRE PROCHAIN COUP</p><span id="attempt-label">01 / 10</span></div><h2 id="composer-title">Composez votre code.</h2><p class="helper">Choisissez une case, puis une couleur.<br>Une couleur peut revenir plusieurs fois.</p>
+          <div id="slots" class="slots" role="group" aria-label="Les quatre positions de votre proposition"></div>
+          <div class="palette-heading"><span>LA PALETTE</span><span>TOUCHES 1 À 6</span></div><div id="palette" class="palette" role="group" aria-label="Choisir une couleur"></div>
+          <button id="submit" class="submit" type="button">Valider la proposition <span aria-hidden="true">↗</span></button>
+          <p id="message" class="message" aria-live="polite" aria-atomic="true"></p>
+          <div class="progress-label"><span>Essais utilisés</span><strong id="attempt-count">0 sur 10</strong></div><div id="progress" class="progress" aria-hidden="true"></div>
+          <button id="restart" class="restart" type="button"><span aria-hidden="true">↻</span> Nouvelle partie</button>
+        </section>
+        <section id="regles" class="rules"><p class="eyebrow">L’ART DE LA DÉDUCTION</p><h2>Chaque indice compte.</h2><p>Retrouvez les <strong>4 couleurs dans le bon ordre</strong> en 10 essais. Le code est tiré au hasard parmi les 6 couleurs, avec répétitions possibles.</p><div class="rule-item"><i class="legend-dot dark"></i><p><strong>Bien placée</strong><br>La bonne couleur, à la bonne place.</p></div><div class="rule-item"><i class="legend-dot light"></i><p><strong>Mal placée</strong><br>La bonne couleur, à une autre place.</p></div><p class="fine-print">Chaque pion compte une seule fois. Les bien placés sont comptés en premier ; les indices ne désignent aucune case. Une proposition incomplète ne coûte aucun essai. Après dix essais sans victoire, la partie est perdue.</p><details><summary>Jouer au clavier</summary><p>Cliquez sur une case ou utilisez Tab pour la sélectionner. Choisissez une couleur avec les touches 1 à 6. Les flèches changent de case ; Retour arrière efface une case. Entrée valide la proposition lorsque vous composez le code.</p></details></section>
+      </aside>
+    </div>
+  </main>
+  <footer class="site-footer"><span>Un peu de hasard. Beaucoup de logique.</span><span>CODE SECRET <b>v1.0.0</b> · Règles code-couleurs-1.0</span></footer>
+  <noscript>Activez JavaScript dans votre navigateur pour jouer à Code secret.</noscript>
+</body>
+</html>
