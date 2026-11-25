@@ -6,9 +6,16 @@
   <meta name="theme-color" content="#153e35">
   <meta name="description" content="Un code, six couleurs, dix essais. Un jeu de déduction inspiré du Mastermind.">
   <title>Code secret · Le jeu des couleurs</title>
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" type="image/svg+xml" href="./icons/icon.svg">
+  <link rel="apple-touch-icon" sizes="180x180" href="./icons/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-title" content="Code secret">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <link rel="stylesheet" href="./style.css">
   <script src="./game.js" defer></script>
   <script src="./app.js" defer></script>
+  <script src="./pwa.js" defer></script>
 </head>
 <body>
   <header class="site-header"><a class="brand" href="./" aria-label="Code secret, accueil"><span class="brand-mark" aria-hidden="true">●<br>● ●</span> CODE SECRET<span class="brand-dot">®</span></a><span class="edition">JEU DE DÉDUCTION <span> / </span> Nº 001</span><a class="rules-link" href="#regles">Comment jouer <span aria-hidden="true">↗</span></a></header>
@@ -33,8 +40,26 @@
         <section id="regles" class="rules"><p class="eyebrow">L’ART DE LA DÉDUCTION</p><h2>Chaque indice compte.</h2><p>Retrouvez les <strong>4 couleurs dans le bon ordre</strong> en 10 essais. Le code est tiré au hasard parmi les 6 couleurs, avec répétitions possibles.</p><div class="rule-item"><i class="legend-dot dark"></i><p><strong>Bien placée</strong><br>La bonne couleur, à la bonne place.</p></div><div class="rule-item"><i class="legend-dot light"></i><p><strong>Mal placée</strong><br>La bonne couleur, à une autre place.</p></div><p class="fine-print">Chaque pion compte une seule fois. Les bien placés sont comptés en premier ; les indices ne désignent aucune case. Une proposition incomplète ne coûte aucun essai. Après dix essais sans victoire, la partie est perdue.</p><details><summary>Jouer au clavier</summary><p>Cliquez sur une case ou utilisez Tab pour la sélectionner. Choisissez une couleur avec les touches 1 à 6. Les flèches changent de case ; Retour arrière efface une case. Entrée valide la proposition lorsque vous composez le code.</p></details></section>
       </aside>
     </div>
+    <section id="installer" class="install-section" aria-labelledby="install-title">
+      <div class="install-content">
+        <p class="eyebrow">VOTRE PROCHAIN RACCOURCI</p>
+        <div class="install-title-row"><img src="./icons/icon-192.png" width="56" height="56" alt=""><h2 id="install-title">Code secret, à portée de main.</h2></div>
+        <p>Retrouvez le jeu sur votre écran d’accueil, avec son nom et son icône. Après une première ouverture en ligne, vous pourrez aussi jouer hors connexion.</p>
+        <button id="install-app" class="install-action" type="button" hidden>Installer Code secret <span aria-hidden="true">↗</span></button>
+        <p id="install-status" class="install-status" role="status">Choisissez ci-dessous les étapes adaptées à votre appareil.</p>
+        <div class="install-steps">
+          <div><h3>iPhone et iPad</h3><p>Ouvrez ce site dans <strong>Safari</strong>. Dans le menu <strong>Partager</strong>, choisissez <strong>Sur l’écran d’accueil</strong>, puis <strong>Ajouter</strong>. Activez « Ouvrir comme app » si cette option est proposée.</p></div>
+          <div><h3>Android</h3><p>Ouvrez ce site dans <strong>Chrome</strong>. Touchez le bouton d’installation s’il apparaît, ou le menu <strong>⋮</strong>, puis <strong>Installer l’application</strong> ou <strong>Ajouter à l’écran d’accueil</strong>.</p></div>
+          <div><h3>Sur ordinateur</h3><p>Dans <strong>Chrome ou Edge</strong>, utilisez le bouton d’installation ci-dessus ou l’icône d’installation dans la barre d’adresse. Sur Mac, Safari propose aussi <strong>Fichier → Ajouter au Dock</strong> selon sa version.</p></div>
+        </div>
+        <p class="install-note">La commande et son nom dépendent du navigateur. Si elle n’apparaît pas, le jeu reste utilisable dans cet onglet. L’installation ne conserve pas la partie : fermer ou recharger le jeu démarre une nouvelle énigme.</p>
+        <p id="offline-status" class="install-status" role="status"></p>
+        <div id="update-notice" class="update-notice" hidden><p>Une nouvelle version est prête. Terminez votre partie avant de l’appliquer.</p><button id="update-app" type="button">Mettre à jour et recommencer</button></div>
+      </div>
+      <figure class="install-qr"><img src="./assets/code-secret-qr.png" width="260" height="260" alt="QR code ouvrant le site public de Code secret et son guide d’installation"><figcaption>Scannez. Ouvrez. Installez.</figcaption><p>Avec l’appareil photo de votre téléphone.</p><a href="https://thomasmetzker24.github.io/Code-secret-Mastermind/#installer">Ouvrir le guide sur le site public ↗</a><a href="./assets/code-secret-qr.png" download="code-secret-qr.png">Télécharger le QR code</a></figure>
+    </section>
   </main>
-  <footer class="site-footer"><span>Un peu de hasard. Beaucoup de logique.</span><span>CODE SECRET <b>v1.0.0</b> · Règles code-couleurs-1.0</span></footer>
+  <footer class="site-footer"><span>Un peu de hasard. Beaucoup de logique. <a href="#installer">Installer l’application</a></span><span>CODE SECRET <b>v1.1.0</b> · Règles code-couleurs-1.0</span></footer>
   <noscript>Activez JavaScript dans votre navigateur pour jouer à Code secret.</noscript>
 </body>
 </html>

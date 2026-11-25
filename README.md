@@ -1,4 +1,4 @@
-# Code secret — v1.0.0
+# Code secret — v1.1.0
 
 Jeu solo en français inspiré du Mastermind. Ouvrir `index.html` directement dans un navigateur, ou lancer `node server.cjs` puis ouvrir http://127.0.0.1:4173. Aucune installation de dépendances n’est nécessaire.
 
@@ -19,6 +19,8 @@ Sélectionner une case, puis une couleur dans la palette. La sélection avance a
 - `tests/game.test.cjs` : tests du moteur avec le lanceur intégré de Node.js.
 - `tests/browser.html` et `tests/browser.js` : vérifications du jeu réel dans une iframe.
 - `server.cjs` : serveur local facultatif, limité aux fichiers de l’application et des tests.
+- `manifest.webmanifest`, `pwa.js`, `sw.js` : identité de l’application, installation et fonctionnement hors ligne.
+- `icons/` et `assets/` : icônes personnalisées et QR code, servis localement sans prestataire externe.
 
 Décisions prise avec Codex : 
 - Utiliser un moteur unique pour les clics, le clavier et l’API, ce qui permet de vérifier les règles indépendamment du rendu, puis de comparer la même partie avec l’écran.
@@ -66,4 +68,40 @@ Rendu inspecté aux largeurs de fenêtre 390 et 1 280 pixels. Aucun débordement
 
 Le dépôt source est [ThomasMetzker24/Code-secret-Mastermind](https://github.com/ThomasMetzker24/Code-secret-Mastermind), sur la branche `main`. Les chemins sont relatifs, compatibles avec un sous-dossier GitHub Pages. Pour mettre le jeu en ligne, activer Pages dans les paramètres GitHub, source « Deploy from a branch », branche `main`, dossier `/ (root)`. Le fichier `.nojekyll` permet de servir directement le site statique. La publication du code dans le dépôt ne configure pas GitHub Pages ; un premier tag de remise a été créé par la suite (20 novembre).
 
-Les parties sont conservées uniquement en mémoire : recharger la page les efface. Pas de compte, de serveur applicatif, de télémétrie, de service d’IA ni de stockage de données personnelles. L'installation PWA n'est pas implémentée. La navigation avec lecteur d'écran, le retour d’un camarade, le dernier tag de remise et la capsule vidéo restent à réaliser.
+Les parties sont conservées uniquement en mémoire : recharger la page les efface. Pas de compte, de serveur applicatif, de télémétrie, de service d’IA ni de stockage de données personnelles. La navigation avec lecteur d'écran, le retour d’un camarade, le dernier tag de remise et la capsule vidéo restent à réaliser.
+
+## Installer Code secret et partager le jeu
+
+La version 1.1.0 prépare une PWA nommée **Code secret**, avec une icône représentant quatre pions colorés sur fond vert. Le manifeste utilise des chemins relatifs, un lancement en fenêtre autonome et des icônes PNG de 192 et 512 pixels, une variante maskable ainsi qu’une icône Apple de 180 pixels. Le dessin source est conservé dans `icons/icon.svg`.
+
+Le guide est intégré au jeu à l’ancre `#installer`. Le fichier `assets/code-secret-qr.png` et sa variante vectorielle `assets/code-secret-qr.svg` encodent exactement :
+
+https://thomasmetzker24.github.io/Code-secret-Mastermind/#installer
+
+Scanner ce QR code avec un téléphone ouvre le site public sur les consignes d’installation. Le QR n’installe rien automatiquement.
+
+- **iPhone et iPad** : ouvrir dans Safari, puis Partager → Sur l’écran d’accueil → Ajouter ; activer « Ouvrir comme app » si proposé.
+- **Android** : ouvrir dans Chrome, puis utiliser le bouton d’installation disponible ou le menu ⋮ → Installer l’application / Ajouter à l’écran d’accueil.
+- **Ordinateur** : dans Chrome ou Edge, utiliser le bouton proposé par le jeu ou l’icône d’installation dans la barre d’adresse. Safari sur Mac propose Ajouter au Dock selon sa version.
+
+Le bouton du jeu n’apparaît que si le navigateur envoie une invitation `beforeinstallprompt`. L’utilisateur peut refuser et continuer à jouer. Les intitulés et possibilités varient selon le navigateur ; les étapes manuelles restent visibles. Référence : [guide MDN sur l’installation des PWA](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Guides/Making_PWAs_installable).
+
+L’installation et le service worker nécessitent HTTPS, ou un serveur local sur `localhost` / `127.0.0.1`. L’ouverture directe de `index.html` reste utilisable pour jouer ; elle ne permet pas de préparer l’installation et le mode hors ligne. L’écran indique quand la préparation hors ligne a réussi.
+
+Après une première ouverture et une mise en cache réussie, le jeu et son guide sont disponibles sans réseau sur le même appareil et dans le même navigateur. Le navigateur peut néanmoins supprimer ce cache. Aucune partie n’est sauvegardée : une nouvelle ouverture ou un rechargement crée une nouvelle partie.
+
+Le service worker conserve une version complète des ressources et limite son cache au périmètre du projet. Il exclut les pages de test et les ressources demandées par une page `?test=1`. Les iframes de test n’enregistrent pas de service worker. Une nouvelle version attend l’accord de l’utilisateur via « Mettre à jour et recommencer » ; la première activation ne recharge pas la partie. Pour une future version, modifier la version du cache dans `sw.js`, puis publier les fichiers ensemble.
+
+**Publication** : les fichiers PWA, les icônes et les images du QR code doivent être publiés ensemble sur `main`. GitHub Pages déploie cette branche à l’adresse publique du jeu. Le guide est accessible à l’ancre `#installer` et le manifeste à `manifest.webmanifest`.
+
+## Vérifications PWA du 25 novembre 2026
+
+- `node --test tests/game.test.cjs tests/sw.test.cjs` : **22 tests réussis**, soit les 18 tests historiques du moteur et 4 tests du service worker. `npm test` exécute aussi ces deux fichiers.
+- **23 contrôles PWA réussis** avec Microsoft Edge en mode headless via Playwright : manifeste et types MIME, dimensions des icônes, chemins sous `/Code-secret-Mastermind/`, absence de débordement à 375 et 1 280 pixels, rechargement et proposition hors ligne, protection du mode test et absence d’erreur JavaScript. Les dix vérifications existantes de l’API et de l’interface ont également été exécutées avec succès.
+- Les événements d’invitation, d’annulation et de confirmation d’installation ont été **simulés** pour contrôler les messages et le bouton. Aucune installation réelle au niveau du système n’a été effectuée. Le cycle d’activation du service worker a été vérifié par tests unitaires ; le passage entre deux versions réellement installées reste à essayer.
+- Les captures `test-results/pwa-375.png` et `test-results/pwa-1280.png` ont été relues visuellement. Ce sont des simulations de largeur, pas des essais sur téléphones physiques.
+- Le QR PNG a été décodé avec `zxing-cpp` : l’adresse obtenue correspond exactement à celle indiquée ci-dessus. La lecture avec l’appareil photo d’un téléphone reste à vérifier.
+
+Pour reproduire les contrôles navigateur, disposer de Playwright et d’un navigateur compatible comme outils de développement, puis lancer `node tests/pwa-browser.cjs`. Le script utilise temporairement le port local 4175 et écrit les captures dans `test-results/`, ignoré par Git. Il accepte `CODE_SECRET_PLAYWRIGHT` pour le chemin du module Playwright et `CODE_SECRET_BROWSER` pour celui de l’exécutable du navigateur. Ces outils ne sont pas nécessaires aux personnes qui jouent et ne sont pas des dépendances de l’application.
+
+Pour régénérer les images, `tools/generate-pwa-assets.py` utilise Pillow et qrcode comme outils de développement uniquement. Exécuter ce script depuis un Python où ces bibliothèques sont disponibles. Ne pas générer le QR ou les icônes avec un service distant à chaque visite : les fichiers fournis sont autonomes.
