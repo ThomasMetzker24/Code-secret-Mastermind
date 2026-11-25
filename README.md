@@ -41,7 +41,7 @@ api.getState();
 
 `getConfig` et `getState` sont synchrones. Les mutations renvoient des promesses après mise à jour du DOM. Les entrées et les états retournés sont copiés. Un `startGame` invalide rejette avec une `Error` portant `code` et `message`, sans modifier l’état ni l’interface. Un refus de proposition ne change que `lastError`. Les contrôles suivent la priorité du contrat, y compris pour les tableaux creux et les éléments non textuels.
 
-## Vérifications du 11 novembre et du 20 novembre 2026
+## Vérifications du 11 novembre, du 20 novembre et du 25 novembre 2026
 
 Lancer `node --test tests/game.test.cjs` ou `npm test` : **18 tests réussis, 0 échec**. Ils couvrent les neuf exemples T01–T09 (indices et état), les refus prioritaires, les doublons, les copies défensives, le cycle de vie, la victoire à dix, la défaite et les démarrages invalides. Une vérification indépendante du calcul parcourt aussi les 1 296 secrets possibles contre quatre propositions représentatives.
 
@@ -59,6 +59,8 @@ Avec le serveur local, ouvrir http://127.0.0.1:4173/tests/browser.html puis cliq
 **Correction documentée.** Le premier essai d’intégration acceptait seulement les objets dont le prototype était celui de la fenêtre du jeu. Un objet ordinaire fourni depuis la fenêtre parente était refusé avec `invalid-options`. Avant correction : 3 vérifications d’intégration réussies, 7 échecs. La reconnaissance d’un objet ordinaire accepte désormais aussi ceux provenant d’une autre fenêtre. Après correction, le même essai : 10 réussites, 0 échec. Le test Node « Objet ordinaire fourni par une autre fenêtre » conserve ce scénario de régression.
 
 Rendu inspecté aux largeurs de fenêtre 390 et 1 280 pixels. Aucun débordement horizontal mesuré ; à 390 pixels, la largeur utile et la largeur de contenu valent toutes deux 375 pixels, la barre de défilement occupant le reste. La composition et la validation au clavier ont été essayées dans le navigateur. Cela constitue cependant une simulation mobile, pas un essai sur un téléphone physique. Des essais sur un Samsung Galaxy A8 ont été réalisés le 20 novembre. Le lien du jeu Mastermind fonctionne sur le navigateur Google Chrome ainsi que sur Mozilla Firefox. En revanche, l'affichage mobile doit être adapté: à l'heure actuelle, les indices ne sont totalement visibles qu'en retournant le téléphone à l'horizontal. Des essais ont également été fait sur ordinateur. Le lien du jeu fonctionne sur les navigateurs Microsoft Edge, Google Chrome et Mozilla Firefox. Enfin, la conformité de l'URL GitHub Pages publiée a aussi été testée avec succès.
+
+**Test en classe.** Samsung Galaxy A8, Mozilla, Firefox. Les boutons sont visibles au format smartphone. En revanche, les indices ne s'affichent que partiellement si le téléphone est à la verticale. Il faut le tourner à la verticale afin de voir les indices dans leur totalité. Enfin, l'historique s'affiche correctement au format smartphone.
 
 ## Publication et limites
 
